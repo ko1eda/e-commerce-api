@@ -3,10 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
+use App\Traits\HasChildren;
 
 class Category extends Model
 {
+    use HasChildren;
+
+    protected $fillable = [
+        'name',
+        'order',
+        'slug'
+    ];
+
 
     /**
      * A category can have child categories
@@ -16,18 +24,5 @@ class Category extends Model
     public function children()
     {
         return $this->hasMany(Category::class, 'parent_id', 'id');
-    }
-
-    
-    /**
-     * Return all parent categories with their children (subcategories) as relations.
-     * Then filter those children from the top level of the returned collection
-     *
-     * @param mixed $query
-     * @return void
-     */
-    public function scopeParents($query)
-    {
-        return $query->with('children')->where('parent_id', null);
     }
 }
