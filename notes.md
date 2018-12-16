@@ -4,3 +4,6 @@
 ## Rest API in laravel
 + Basic concept https://laracasts.com/discuss/channels/laravel/rest-api-versioning
 + Figure out how to load routes from previous version of API if no routes are returned from the new version of the API in order to reduce duplication
+
+## Storing price in mysql 
++ https://stackoverflow.com/questions/37107123/sould-i-store-price-as-decimal-or-integer-in-mysql
