@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Products;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Product;
 
-class ProductsTest extends TestCase
+class ProductsIndexTest extends TestCase
 {
-    public function test_all_products_are_displayed_from_index_route()
+    public function test_all_products_are_displayed()
     {
         // Given we have 2 products
         factory(Product::class, 2)->create();
@@ -19,7 +19,7 @@ class ProductsTest extends TestCase
         $this->json('GET', route('products.index'))->assertJsonCount(2, 'data');
     }
 
-    public function test_index_route_displays_pagination_data()
+    public function test_pagination_data_is_displayed()
     {
         // Our products index should output json in this structure
         $this->json('GET', route('products.index'))->assertJsonStructure([
