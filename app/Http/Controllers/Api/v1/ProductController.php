@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductIndexResource;
 
 class ProductController extends Controller
 {
@@ -15,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return ProductIndexResource::collection(Product::paginate(10));
     }
 
     /**

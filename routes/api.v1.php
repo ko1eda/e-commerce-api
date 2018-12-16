@@ -15,3 +15,5 @@ use Illuminate\Http\Request;
 
 // Categories
 Route::apiResource('categories', 'CategoryController');
+
+Route::apiResource('products', 'ProductController');
