@@ -11,7 +11,7 @@ class Product extends Model
      *
      * @return String
      */
-    public function getRouteByKeyName()
+    public function getRouteKeyName()
     {
         return 'slug';
     }
