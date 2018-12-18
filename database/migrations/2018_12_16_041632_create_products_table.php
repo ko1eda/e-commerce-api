@@ -15,14 +15,13 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('category_id')->index();
             $table->string('name');
             $table->string('slug')->unique();
             $table->integer('price'); // Stored as int bc https://stackoverflow.com/questions/37107123/sould-i-store-price-as-decimal-or-integer-in-mysql
             $table->string('image_path')->default('https://via.placeholder.com/620');
             $table->timestamps();
 
-            $table->foreign('category_id')->references('id')->on('categories');
+            // $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 
