@@ -18,6 +18,7 @@ class ProductResource extends ProductIndexResource
     {
         return array_merge(parent::toArray($request), [
             'image_path' => $this->image_path,
+            'price' => $this->price,
             'variations' => []
         ]);
     }
