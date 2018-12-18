@@ -12,6 +12,6 @@ $factory->define(App\Models\Product::class, function (Faker $faker) {
         'name' => $name = $faker->name(),
         'slug'=> str_slug($name),
         'price' => $faker->numberBetween(1, 100000),
-        'description' => $faker->paragraph()
+        'description' => str_limit($faker->sentences($nb = 3), 68)
     ];
 });
