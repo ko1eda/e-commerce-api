@@ -5,8 +5,8 @@ use App\Models\Category;
 
 $factory->define(Category::class, function (Faker $faker) {
     return [
-        'name' => $name = $faker->name(),
-        'slug' => str_slug($name)
+        'name' =>$name = str_limit($faker->words(2, true), 12),
+        'slug'=> str_slug($name),
     ];
 });
 
