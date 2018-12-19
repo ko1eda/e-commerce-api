@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Category;
+use App\Models\Product;
 
 class CategoryTest extends TestCase
 {
@@ -41,5 +42,18 @@ class CategoryTest extends TestCase
         $second = factory(Category::class)->create(['order' => 2]);
 
         $this->assertEquals('cool', Category::orderBy('order', 'asc')->first()->name);
+    }
+
+
+    public function test_it_has_many_proudcts()
+    {
+        // given we have a category
+        $category = factory(Category::class)->create();
+
+        $category->products()->save(factory(Product::class)->create());
+        
+        // and we call products
+        // then it should return a type App\Modles\Product
+        $this->assertInstanceOf(Product::class, $category->products->first());
     }
 }

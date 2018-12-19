@@ -22,7 +22,7 @@ class CategoryResource extends JsonResource
         return [
             'name' => $this->name,
             'slug' => $this->slug,
-            'children' => CategoryResource::collection($this->whenLoaded('children'))
+            'children' => CategoryResource::collection($this->children)
         ];
     }
 }

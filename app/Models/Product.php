@@ -15,4 +15,15 @@ class Product extends Model
     {
         return 'slug';
     }
+
+
+    /**
+     * children
+     *
+     * @return void
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }
