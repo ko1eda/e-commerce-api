@@ -25,4 +25,16 @@ class Category extends Model
     {
         return $this->hasMany(Category::class, 'parent_id', 'id');
     }
+
+    
+    /**
+     * A category has many products
+     *
+     * @return void
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
+
 }

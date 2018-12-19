@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductIndexResource;
 use App\Http\Resources\ProductResource;
+use App\Filters\CategoryFilter;
     
 class ProductController extends Controller
 {
@@ -15,10 +16,12 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $category = $request->query('category');
+
         return ProductIndexResource::collection(
-            Product::paginate(10)
+            Product::withFilters($this->filters())->paginate(10)
         );
     }
 
@@ -86,5 +89,18 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+
+    /**
+     * Return all used filters
+     *
+     * @return array
+     */
+    protected function filters() : array
+    {
+        return [
+            'category' => new CategoryFilter(),
+        ];
     }
 }

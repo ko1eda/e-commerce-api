@@ -34,14 +34,4 @@ class CatergoriesIndexTest extends TestCase
         // ex data : [{name: , slug: , child: [name:, slug:] }, {name: , slug:, child: [] }]
         $this->json('GET', route('categories.index'))->assertJsonCount(2, 'data');
     }
-
-
-    public function test_parent_categories_are_returned_in_their_given_order_from_index()
-    {
-        $second = factory(Category::class)->create(['order' => 2]);
-        $first = factory(Category::class)->create(['order' => 1]);
-
-        $this->json('GET', route('categories.index'))
-            ->assertSeeInOrder([$first->name, $second->name]);
-    }
 }
