@@ -1,28 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1;
+namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Models\ProductVariation;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\ProductIndexResource;
-use App\Http\Resources\ProductResource;
-use App\Filters\CategoryFilter;
-    
-class ProductController extends Controller
+
+class ProductVariationController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $category = $request->query('category');
-
-        return ProductIndexResource::collection(
-            Product::withFilters($this->filters())->paginate(10)
-        );
+        //
     }
 
     /**
@@ -49,21 +41,21 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\ProductVariation  $productVariation
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show(ProductVariation $productVariation)
     {
-        return new ProductResource($product, $product->varitions);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\ProductVariation  $productVariation
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(ProductVariation $productVariation)
     {
         //
     }
@@ -72,10 +64,10 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\ProductVariation  $productVariation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, ProductVariation $productVariation)
     {
         //
     }
@@ -83,24 +75,11 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\ProductVariation  $productVariation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(ProductVariation $productVariation)
     {
         //
-    }
-
-
-    /**
-     * Return all used filters
-     *
-     * @return array
-     */
-    protected function filters() : array
-    {
-        return [
-            'category' => new CategoryFilter(),
-        ];
     }
 }

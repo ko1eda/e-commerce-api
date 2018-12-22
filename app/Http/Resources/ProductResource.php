@@ -11,13 +11,14 @@ class ProductResource extends ProductIndexResource
      *
      * https://secure.php.net/manual/en/function.array-merge.php
      * could also use array union operater return arr1 + arr2;
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function toArray($request)
     {
         return array_merge(parent::toArray($request), [
-            'variations' => []
+            'variations' => ProductVariationResource::collection($this->variations)
         ]);
     }
 }

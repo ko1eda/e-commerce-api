@@ -22,11 +22,21 @@ class Product extends Model
     /**
      * A Product is associated with multiple categories
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function categories()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    /**
+     * A Product can have many variations
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function variations()
+    {
+        return $this->hasMany(ProductVariation::class)->orderBy('name', 'asc');
     }
 
     /**
