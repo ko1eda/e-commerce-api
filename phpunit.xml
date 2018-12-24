@@ -25,7 +25,7 @@
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
-        <env name="MYSQL_DATABASE" value="test_ecommerce"/>
+        <env name="DB_DATABASE" value="test_ecommerce"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="MAIL_DRIVER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>

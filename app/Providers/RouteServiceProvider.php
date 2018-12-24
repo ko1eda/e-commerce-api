@@ -60,14 +60,15 @@ class RouteServiceProvider extends ServiceProvider
      * Define the "api" routes for the application.
      *
      * These routes are typically stateless.
-     *
+     * see here for rest api concept https://laracasts.com/discuss/channels/laravel/rest-api-versioning
+     * 
      * @return void
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
+        Route::prefix('api/v1')
              ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+             ->namespace('App\Http\Controllers\Api\v1')
+             ->group(base_path('routes/api.v1.php'));
     }
 }
