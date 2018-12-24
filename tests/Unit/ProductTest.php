@@ -33,12 +33,8 @@ class ProductTest extends TestCase
         // given we have a product
         $product = factory(Product::class)->create();
 
-        $var = new ProductVariation;
-        $var->name = $product->name;
-        $var->price = $product->price;
-
         // and that product has a variation
-        $product->variations()->save($var);
+        $product->variations()->save(factory(ProductVariation::class)->create());
          
         // if we list that products variations, then it should be
         // then it should be a productvariation

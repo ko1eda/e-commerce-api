@@ -36,7 +36,7 @@ class Product extends Model
      */
     public function variations()
     {
-        return $this->hasMany(ProductVariation::class)->orderBy('name', 'asc');
+        return $this->hasMany(ProductVariation::class)->orderBy('order', 'asc');
     }
 
     /**
