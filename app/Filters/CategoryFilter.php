@@ -3,8 +3,7 @@
 namespace App\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
-use App\Filters\Contracts\Filter;
+use App\Contracts\Filter;
 
 class CategoryFilter implements Filter
 {

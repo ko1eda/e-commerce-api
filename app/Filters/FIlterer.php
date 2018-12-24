@@ -4,7 +4,7 @@ namespace App\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use App\Filters\Contracts\Filter;
+use App\Contracts\Filter;
 
 class Filterer
 {
@@ -32,15 +32,15 @@ class Filterer
      * for the given key
      * return the builder with or without filters applied
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param Builder $builder
      * @param array $filters
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
     public function apply($builder, array $filters)
     {
         foreach ($this->siftFilters($filters) as $key => $filter) {
             if (!$filter instanceof Filter) {
-                throw new \Error('This filter must implement App\Filters\Contracts\Filter');
+                throw new \Error('This filter must implement App\Contracts\Filter');
             }
 
             $filter->apply($builder, $this->request->get($key));
