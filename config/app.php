@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'en_US',
 
     /*
     |--------------------------------------------------------------------------
@@ -107,6 +107,19 @@ return [
     */
 
     'faker_locale' => 'en_US',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Currency
+    |--------------------------------------------------------------------------
+    |
+    | This represents the default currency that will be set for the application.
+    | If no user-specifc default currency is set this will be used for all money object operations
+    | This value can be changed per users and updated through an API endpoint
+    |
+    */
+
+    'currency' => 'USD',
 
     /*
     |--------------------------------------------------------------------------

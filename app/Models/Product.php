@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Traits\Filterable;
+use App\Traits\Priceable;
 
 class Product extends Model
 {
-    use Filterable;
+    use Filterable, Priceable;
 
     /**
      * Override the default route key
@@ -19,7 +20,6 @@ class Product extends Model
     {
         return 'slug';
     }
-
 
     /**
      * A Product is associated with multiple categories

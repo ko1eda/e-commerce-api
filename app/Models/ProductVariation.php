@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Priceable;
 
 class ProductVariation extends Model
 {
+
+    use Priceable;
+
     /**
      * By convention laravel uses product_variations
      * as the table name. But I want to name every non-bridge
