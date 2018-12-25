@@ -2,43 +2,33 @@
 
 namespace App\Traits;
 
-use Illuminate\Database\Eloquent\Builder;
-use Money\Currencies\ISOCurrencies;
-use Money\Currency;
-use Money\Formatter\IntlMoneyFormatter;
-use Money\Money;
+use App\Cart\Money;
 
 trait Priceable
 {
     /**
-     * Creates a new money object
-     * set to the users default currency
-     * which is checked via middleware
-     * If no currency is set, it will use the default
+     * Creates a custom money object
+     * which is really just a convienience
+     * wrapper for Money\Money package
+     * return the price as a newly configured money object
+     * set to the users configured currency
      *
-     * @return Money
+     * @return Money;
      */
     public function getPriceAttribute($value)
     {
-        return Money::{config('app.currency')}($value);
+        return new Money($value);
     }
 
     /**
-     * create a money formatter
-     * taking in a php number formatter set
-     * to the correct locale (which is checked via middleware)
-     * and the ISO currency list
-     * return the formatted price string
+     * Return a formatted price string
+     * for the given money object
+     * formatted to the users configured locale
      *
      * @return String
      */
     public function getFormattedPriceAttribute()
     {
-        $moneyFormatter = new IntlMoneyFormatter(
-            new \NumberFormatter(config('app.locale'), \NumberFormatter::CURRENCY),
-            new ISOCurrencies()
-        );
-        
-        return $moneyFormatter->format($this->price);
+        return $this->price->formatted();
     }
 }
