@@ -20,6 +20,58 @@ class ProductVariation extends Model
      */
     protected $table = 'products_variations';
 
+    /**
+     * Append these dynamic attributes to
+     * the model
+     *
+     * @var array
+     */
+    protected $appends = ['hasParentPrice'];
+
+    /**
+     * Override this method from Priceable trait.
+     * If the price on a variation is null
+     * then return the parent price (which is already a money object)
+     * otherwise create a new money object with the variation price
+     *
+     * @return Money;
+     */
+    public function getPriceAttribute($value)
+    {
+        if (! isset($value)) {
+            return $this->product->price;
+        }
+
+        return new \App\Cart\Money($value);
+    }
+
+    /**
+     * If the variation does not have an image
+     * return its partent image.
+     *
+     * @return String
+     */
+    public function getImagePathAttribute($value)
+    {
+        return $value ?? $this->product->image_path;
+    }
+
+    /**
+     * Return true or false
+     * depending on if the variations
+     * shares the same price as its parent
+     *
+     * @throws \Exception
+     * @return bool
+     */
+    public function getHasParentPriceAttribute() : bool
+    {
+        if (! $this->price->amount()->isSameCurrency($this->product->price->amount())) {
+            throw new \Exception('Currency Mismatch Exception');
+        }
+
+        return $this->price->amount()->equals($this->product->price->amount());
+    }
 
     /**
      * A product variation belongs to a product

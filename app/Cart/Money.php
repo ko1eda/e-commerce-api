@@ -32,6 +32,17 @@ class Money
     }
 
     /**
+     * Expose the Money\Money base class
+     * so that we can preform operations
+     *
+     * @return BaseMoney
+     */
+    public function amount()
+    {
+        return $this->money;
+    }
+
+    /**
      * create a money formatter
      * taking in a php number formatter set
      * to the correct locale (which is checked via middleware)

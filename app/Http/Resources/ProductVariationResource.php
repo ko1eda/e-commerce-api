@@ -19,6 +19,7 @@ class ProductVariationResource extends JsonResource
             'name' => $this->name,
             'image_path' => $this->image_path,
             'price' => $this->formattedPrice,
+            'hasParentPrice' => $this->hasParentPrice
         ];
     }
 }
