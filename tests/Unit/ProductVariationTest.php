@@ -50,7 +50,7 @@ class ProductVariationTest extends TestCase
         $this->assertEquals($variation->product->price->amount(), $variation->price->amount());
     }
 
-    public function test_it_returns_a_parent_parent_image_path_if_it_has_no_image()
+    public function test_it_returns_a_parent_image_path_if_it_has_no_image()
     {
         // given we have a product and a variation, both with different prices
         $variation = factory(ProductVariation::class)->create();
@@ -75,5 +75,15 @@ class ProductVariationTest extends TestCase
         unset($variation->price);
 
         $this->assertTrue($variation->hasParentPrice);
+    }
+
+    public function test_it_has_many_stocks()
+    {
+        $variation = factory(ProductVariation::class)->create();
+
+        $variation->stocks()->save(factory(\App\Models\Stock::class)->make());
+
+        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class, $variation->stocks());
+        $this->assertInstanceOf(\App\Models\Stock::class, $variation->stocks->first());
     }
 }

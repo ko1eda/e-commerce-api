@@ -16,6 +16,6 @@ $factory->define(ProductVariation::class, function (Faker $faker) {
         'name' => $name = str_limit($faker->unique()->words(3, true), 20),
         'price' => $faker->numberBetween(1, 1000000),
         'order' => $faker->numberBetween(0, 1000000),
-        'image_path' => $faker->url
+        'image_path' => $faker->url,
     ];
 });

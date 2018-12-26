@@ -28,6 +28,64 @@ class ProductVariation extends Model
      */
     protected $appends = ['hasParentPrice'];
 
+
+    /**
+     * -----------------------------------------
+     * Relationships
+     * -----------------------------------------
+     */
+
+
+    /**
+     * A product variation belongs to a product
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * A product can have many Stock items associated with it
+     * These represent a point in time inventory of the in stock
+     * quantity of each product variation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stocks()
+    {
+        return $this->hasMany(Stock::class);
+    }
+
+    /**
+     * A product variation has one type associated with it
+     * ex: vans shoe -- red (red is the varition) the type would be Color
+     *
+     * note: the second argument is the foreign key
+     *  Thisits saying that when this relationship is called,
+     *  it will look at the id column on products_variations_types
+     *  and match it the local key of this table which is product_variation_type
+     *
+     *  by default it would use this method name + _id
+     *  so type_id as the foreign key and id as the local key
+     *  https://laravel.com/docs/5.7/eloquent-relationships#one-to-many (see one-to-many-inverse)
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function type()
+    {
+        return $this->hasOne(ProductVariationType::class, 'id', 'product_variation_type_id');
+    }
+
+
+    /**
+     * -----------------------------------------
+     * Methods & Attributes
+     * -----------------------------------------
+     */
+
+
     /**
      * Override this method from Priceable trait.
      * If the price on a variation is null
@@ -38,7 +96,7 @@ class ProductVariation extends Model
      */
     public function getPriceAttribute($value)
     {
-        if (! isset($value)) {
+        if (!isset($value)) {
             return $this->product->price;
         }
 
@@ -66,40 +124,10 @@ class ProductVariation extends Model
      */
     public function getHasParentPriceAttribute() : bool
     {
-        if (! $this->price->amount()->isSameCurrency($this->product->price->amount())) {
+        if (!$this->price->amount()->isSameCurrency($this->product->price->amount())) {
             throw new \Exception('Currency Mismatch Exception');
         }
 
         return $this->price->amount()->equals($this->product->price->amount());
-    }
-
-    /**
-     * A product variation belongs to a product
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
-
-    /**
-     * A product variation has one type associated with it
-     * ex: vans shoe -- red (red is the varition) the type would be Color
-     *
-     * note: the second argument is the foreign key
-     *  Thisits saying that when this relationship is called,
-     *  it will look at the id column on products_variations_types
-     *  and match it the local key of this table which is product_variation_type
-     *
-     *  by default it would use this method name + _id
-     *  so type_id as the foreign key and id as the local key
-     *  https://laravel.com/docs/5.7/eloquent-relationships#one-to-many (see one-to-many-inverse)
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function type()
-    {
-        return $this->hasOne(ProductVariationType::class, 'id', 'product_variation_type_id');
     }
 }
