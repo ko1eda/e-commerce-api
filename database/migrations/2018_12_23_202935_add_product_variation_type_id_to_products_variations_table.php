@@ -15,11 +15,6 @@ class AddProductVariationTypeIdToProductsVariationsTable extends Migration
     {
         Schema::table('products_variations', function (Blueprint $table) {
             $table->unsignedInteger('product_variation_type_id')->index();
-
-            $table->foreign('product_variation_type_id')
-                ->references('id')
-                ->on('products_variations_types')
-                ->onDelete('cascade');
         });
     }
 
@@ -30,9 +25,11 @@ class AddProductVariationTypeIdToProductsVariationsTable extends Migration
      */
     public function down()
     {
-        Schema::table('products_variations', function (Blueprint $table) {
-            $table->dropForeign('products_variations_product_variation_type_id_foreign');
-        });
+        // leaving this here just to show how to correctly drop a foreign key column
+
+        // Schema::table('products_variations', function (Blueprint $table) {
+        //     $table->dropForeign('products_variations_product_variation_type_id_foreign');
+        // });
 
         Schema::table('products_variations', function (Blueprint $table) {
              $table->dropColumn('product_variation_type_id');

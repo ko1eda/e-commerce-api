@@ -18,11 +18,6 @@ class CreateStocksTable extends Migration
             $table->unsignedInteger('product_variation_id')->index();
             $table->unsignedInteger('quantity');
             $table->timestamps();
-
-            $table->foreign('product_variation_id')
-            ->references('id')
-            ->on('products_variations')
-            ->onDelete('cascade');
         });
     }
 
@@ -33,10 +28,6 @@ class CreateStocksTable extends Migration
      */
     public function down()
     {
-        Schema::table('stocks', function (Blueprint $table) {
-            $table->dropForeign('stocks_product_variation_id_foreign');
-        });
-
         Schema::dropIfExists('stocks');
     }
 }
