@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\ProductVariation;
+use App\Models\Stock;
 
 class ProductVariationTest extends TestCase
 {
@@ -86,4 +87,43 @@ class ProductVariationTest extends TestCase
         $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class, $variation->stocks());
         $this->assertInstanceOf(\App\Models\Stock::class, $variation->stocks->first());
     }
+
+    
+    public function test_it_has_access_to_its_current_stock()
+    {
+        // Given we have a product with a variation
+        $variation = factory(ProductVariation::class)->create();
+
+        // And that variation has one stock block in our database
+        $variation->stocks()->save(factory(Stock::class)->make());
+
+        // then the variations current stock should equal the stock that was just added
+        $this->assertEquals(
+            $initalStock = Stock::where('product_variation_id', $variation->id)->first()->quantity,
+            $variation->current_stock
+        );
+
+        // however if we update the stock block by adding a new stock object for the variation
+        $variation->stocks()->save(factory(Stock::class)->make());
+
+        // then the returned stock should reflect that
+        $this->assertNotEquals(
+            $initalStock,
+            $variation->refresh()->current_stock
+        );
+    }
+
+    public function test_it_knows_if_it_is_in_stock()
+    {
+        // Given we have a product with a variation
+        $variation = factory(ProductVariation::class)->create();
+
+        // then in stock should be 0 or false 1 or true
+        $this->assertEquals(false, $variation->in_stock);
+
+        // And that variation has one stock block in our database
+        $variation->stocks()->save(factory(Stock::class)->make());
+
+        $this->assertEquals(true, $variation->refresh()->in_stock);
+    }   
 }
