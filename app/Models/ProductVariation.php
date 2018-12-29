@@ -98,7 +98,6 @@ class ProductVariation extends Model
      * Return true or false
      * if a product variation has a stock count > 0
      *
-     * @throws \Exception
      * @return bool
      */
     public function getInStockAttribute() : bool
@@ -153,7 +152,7 @@ class ProductVariation extends Model
 
     /**
      * A product variation has one type associated with it
-     * 
+     *
      * note: the second argument is the foreign key
      *  Thisits saying that when this relationship is called,
      *  it will look at the id column on products_variations_types

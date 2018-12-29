@@ -11,6 +11,11 @@ class Product extends Model
 {
     use Filterable, Priceable;
 
+
+
+    protected $appends = ['total_stock', 'in_stock'];
+
+
     /**
      * Override the default route key
      *
@@ -20,6 +25,29 @@ class Product extends Model
     {
         return 'slug';
     }
+    
+
+    /**
+     * -----------------------------------------
+     * Methods & Attributes
+     * -----------------------------------------
+     */
+    public function getTotalStockAttribute()
+    {
+        return $this->variations->sum('current_stock');
+    }
+
+
+    public function getInStockAttribute()
+    {
+        return $this->total_stock > 0;
+    }
+
+    /**
+     * -----------------------------------------
+     * Relationships
+     * -----------------------------------------
+     */
 
     /**
      * A Product is associated with multiple categories

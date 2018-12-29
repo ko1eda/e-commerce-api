@@ -125,5 +125,5 @@ class ProductVariationTest extends TestCase
         $variation->stocks()->save(factory(Stock::class)->make());
 
         $this->assertEquals(true, $variation->refresh()->in_stock);
-    }   
+    }
 }
