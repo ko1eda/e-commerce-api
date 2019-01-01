@@ -21,7 +21,8 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrustProxies::class,
         \Spatie\Cors\Cors::class,
         \App\Http\Middleware\SetCurrency::class,
-        \App\Http\Middleware\SetLocale::class
+        \App\Http\Middleware\SetLocale::class,
+        \App\Http\Middleware\ProfileJsonResponse::class
     ];
 
     /**

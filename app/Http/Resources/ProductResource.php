@@ -25,7 +25,6 @@ class ProductResource extends ProductIndexResource
                 $this->variations
             )
             ->groupBy('type.name')
-            // ->sortKeysDesc()
         ]);
     }
 }

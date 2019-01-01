@@ -18,8 +18,6 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $category = $request->query('category');
-
         return ProductIndexResource::collection(
             Product::withFilters($this->filters())->paginate(10)
         );
@@ -54,7 +52,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return new ProductResource($product, $product->varitions);
+        return new ProductResource($product->load(['variations.type', 'variations.stock', 'variations.product']));
     }
 
     /**
