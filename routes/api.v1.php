@@ -28,6 +28,6 @@ Route::namespace('Auth')->group(function () {
         Route::post('login', 'AuthController@login')->name('login');
         Route::post('logout', 'AuthControlelr@logout')->name('logout');
         Route::post('refresh', 'AuthController@refresh')->name('refresh');
-        Route::post('me', 'AuthController@me')->name('me');
+        Route::get('me', 'AuthController@me')->name('me');
     });
 });

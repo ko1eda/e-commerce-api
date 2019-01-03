@@ -44,16 +44,16 @@ class AuthController extends Controller
                     'token' => $token
                 ]
             ]);
-    }
+}
 
     /**
      * Get the authenticated User.
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function me()
+    public function me(Request $request)
     {
-        return response()->json(auth()->user());
+        return new PrivateUserResource($request->user());
     }
 
     /**

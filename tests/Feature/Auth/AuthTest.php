@@ -61,4 +61,22 @@ class AuthTest extends TestCase
             'locale' => $user->locale
         ]);
     }
+
+    public function test_only_an_authenticated_user_can_access_the_me_route()
+    {
+        // given we have a  user
+        $user = factory(User::class)->create();
+
+        // and they are not authenticated
+        // then if they try and access the me route
+        // they will recieve a 401 unauthorized
+        $this->json('GET', route('me'))
+            ->assertStatus(401);
+
+        // however if they do authenticate and provide a bearer token
+        // then they should recieve their private user information
+        // as a json response
+        $this->jsonAs($user, 'GET', route('me'))
+            ->assertJsonFragment(['id' => $user->id]);
+    }
 }
