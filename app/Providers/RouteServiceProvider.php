@@ -61,7 +61,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * These routes are typically stateless.
      * see here for rest api concept https://laracasts.com/discuss/channels/laravel/rest-api-versioning
-     * 
+     *
      * @return void
      */
     protected function mapApiRoutes()
