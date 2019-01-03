@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1;
+namespace App\Http\Controllers\Api\v1\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Http\Resources\PrivateUserResource;
 
-class RegisterController extends Controller
+class RegistrationController extends Controller
 {
 
     /**

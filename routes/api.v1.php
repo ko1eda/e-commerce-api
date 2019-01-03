@@ -20,10 +20,14 @@ Route::apiResource('categories', 'CategoryController');
 Route::apiResource('products', 'ProductController');
 
 // Auth
-Route::prefix('auth')->group(function () {
-    Route::post('register', 'RegisterController@register')->name('register');
-    Route::post('login', 'AuthController@login')->name('login');
-    Route::post('logout', 'AuthController@logout')->name('logout');
-    Route::post('refresh', 'AuthController@refresh')->name('refresh');
-    Route::post('me', 'AuthController@me')->name('me');
+// all files in directory namespace /Api/v1/Auth
+// all routes prefixed with auth ex: /api/v1/auth/login
+Route::namespace('Auth')->group(function () {
+    Route::prefix('auth')->group(function () {
+        Route::post('register', 'RegistrationController@register')->name('register');
+        Route::post('login', 'AuthController@login')->name('login');
+        Route::post('logout', 'AuthControlelr@logout')->name('logout');
+        Route::post('refresh', 'AuthController@refresh')->name('refresh');
+        Route::post('me', 'AuthController@me')->name('me');
+    });
 });

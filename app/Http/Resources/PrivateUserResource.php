@@ -18,7 +18,7 @@ class PrivateUserResource extends JsonResource
             'id' => $this->id,
             'email' => $this->email,
             'name' => $this->name,
-            'currency' => $this->curency ?? config('app.currency'),
+            'currency' => $this->currency ?? config('app.currency'),
             'locale' => $this->locale ?? config('app.locale')
         ];
     }

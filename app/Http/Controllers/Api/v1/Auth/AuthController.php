@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1;
+namespace App\Http\Controllers\Api\v1\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PrivateUserResource;
 
 class AuthController extends Controller
 {
@@ -18,19 +19,31 @@ class AuthController extends Controller
     }
 
     /**
-     * Get a JWT via given credentials.
+     * If the provided email and password are correct
+     * return a user resource with an access token
+     * atatched as metadata
+     *
+     * If the provided information is not correct
+     * return a valiadation error
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function login(Request $request)
     {
-        $credentials = $request->only(['email', 'password']);
-
-        if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if (! $token = auth()->attempt($request->validate(['email' => 'required', 'password' => 'required']))) {
+            return response()->json([
+                'errors' => [
+                    'email' => ['We could not verify that email or password, try again']
+                ]
+            ], 422);
         }
 
-        return $this->respondWithToken($token);
+        return (new PrivateUserResource($request->user()))
+            ->additional([
+                'meta' => [
+                    'token' => $token
+                ]
+            ]);
     }
 
     /**
