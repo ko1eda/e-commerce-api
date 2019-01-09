@@ -16,4 +16,18 @@ use Illuminate\Http\Request;
 // Categories
 Route::apiResource('categories', 'CategoryController');
 
+// Products
 Route::apiResource('products', 'ProductController');
+
+// Auth
+// all files in directory namespace /Api/v1/Auth
+// all routes prefixed with auth ex: /api/v1/auth/login
+Route::namespace('Auth')->group(function () {
+    Route::prefix('auth')->group(function () {
+        Route::post('register', 'RegistrationController@register')->name('register');
+        Route::post('login', 'AuthController@login')->name('login');
+        Route::post('logout', 'AuthControlelr@logout')->name('logout');
+        Route::post('refresh', 'AuthController@refresh')->name('refresh');
+        Route::get('me', 'AuthController@me')->name('me');
+    });
+});

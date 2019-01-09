@@ -13,3 +13,8 @@
 
 ## Storing price in mysql 
 + https://stackoverflow.com/questions/37107123/sould-i-store-price-as-decimal-or-integer-in-mysql
+
+
+## Authentication with jwt
++ https://github.com/tymondesigns/jwt-auth
++ https://jwt-auth.readthedocs.io/en/develop/quick-start/

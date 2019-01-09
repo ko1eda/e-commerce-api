@@ -4,10 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use App\Filters\Filterer;
+use App\Traits\Filterable;
+use App\Traits\Priceable;
 
 class Product extends Model
 {
+    use Filterable, Priceable;
+
+
+
+    protected $appends = ['total_stock', 'in_stock'];
+
+
     /**
      * Override the default route key
      *
@@ -17,7 +25,29 @@ class Product extends Model
     {
         return 'slug';
     }
+    
 
+    /**
+     * -----------------------------------------
+     * Methods & Attributes
+     * -----------------------------------------
+     */
+    public function getTotalStockAttribute()
+    {
+        return $this->variations->sum('current_stock');
+    }
+
+
+    public function getInStockAttribute()
+    {
+        return $this->total_stock > 0;
+    }
+
+    /**
+     * -----------------------------------------
+     * Relationships
+     * -----------------------------------------
+     */
 
     /**
      * A Product is associated with multiple categories
@@ -37,17 +67,5 @@ class Product extends Model
     public function variations()
     {
         return $this->hasMany(ProductVariation::class)->orderBy('order', 'asc');
-    }
-
-    /**
-     * Make a new filterer, pass in the builder
-     * and any filters that you want ot apply
-     *
-     * @param array $filers
-     * @return Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeWithFilters(Builder $builder, array $filters = [])
-    {
-        return (new Filterer(request()))->apply($builder, $filters);
     }
 }

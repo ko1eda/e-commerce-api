@@ -2,25 +2,20 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Models\Product;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ProductIndexResource;
-use App\Http\Resources\ProductResource;
-use App\Filters\CategoryFilter;
-    
-class ProductController extends Controller
+
+class StockController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        return ProductIndexResource::collection(
-            Product::withFilters($this->filters())->paginate(10)
-        );
+        //
     }
 
     /**
@@ -47,21 +42,21 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show(Stock $stock)
     {
-        return new ProductResource($product->load(['variations.type', 'variations.stock', 'variations.product']));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Stock $stock)
     {
         //
     }
@@ -70,10 +65,10 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Stock $stock)
     {
         //
     }
@@ -81,24 +76,11 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Stock $stock)
     {
         //
-    }
-
-
-    /**
-     * Return all used filters
-     *
-     * @return array
-     */
-    protected function filters() : array
-    {
-        return [
-            'category' => new CategoryFilter(),
-        ];
     }
 }
