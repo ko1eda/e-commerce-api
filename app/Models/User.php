@@ -40,8 +40,6 @@ class User extends Authenticatable implements JWTSubject
         });
     }
 
-
-
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
@@ -60,5 +58,22 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /**
+    | -----------------------------------------
+    | Relationships
+    | -----------------------------------------
+    */
+
+    /**
+     * A user can check out many product variations, we call this a cart
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function cart()
+    {
+        return $this->belongsToMany(ProductVariation::class)
+            ->withPivot('quantity');
     }
 }

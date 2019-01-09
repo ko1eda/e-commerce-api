@@ -32,6 +32,7 @@ class Product extends Model
      * Methods & Attributes
      * -----------------------------------------
      */
+    
     public function getTotalStockAttribute()
     {
         return $this->variations->sum('current_stock');
