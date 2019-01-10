@@ -74,6 +74,7 @@ class User extends Authenticatable implements JWTSubject
     public function cart()
     {
         return $this->belongsToMany(ProductVariation::class)
-            ->withPivot('quantity');
+            ->withPivot('quantity')
+            ->withTimestamps();
     }
 }

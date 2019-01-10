@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Category;
 
-class CatergoriesIndexTest extends TestCase
+class CategoriesIndexTest extends TestCase
 {
     public function test_a_collection_of_categories_is_returned_from_index()
     {

@@ -19,6 +19,9 @@ Route::apiResource('categories', 'CategoryController');
 // Products
 Route::apiResource('products', 'ProductController');
 
+// Cart
+Route::apiResource('cart', 'CartController');
+
 // Auth
 // all files in directory namespace /Api/v1/Auth
 // all routes prefixed with auth ex: /api/v1/auth/login
