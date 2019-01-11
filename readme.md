@@ -45,7 +45,7 @@ services :
 To use the Money package that is utizalized by this application add this to the DockerFile found in the .php directory above where it stays WORKDIR
 
 ```
-RUN apt-get update && apt-get install php7.2-intl
+RUN apt-get update && apt-get install php7.2-intl php7.2-bcmath
 
 WORKDIR /var/www/html
 ```
