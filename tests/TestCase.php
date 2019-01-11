@@ -10,6 +10,14 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, RefreshDatabase;
 
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        $this->withoutExceptionHandling();
+    }
+
+
     /**
      * Get jwt token for the given user (using the JWT guard tokenByID method)
      * Attatch it to the request header as a bearer token

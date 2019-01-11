@@ -13,7 +13,8 @@ class CartStoreTest extends TestCase
     public function test_it_does_not_allow_unauthenticated_users_to_store_items()
     {
         // 401 unauthorized
-        $this->json('POST', route('cart.store'))
+        $this->withExceptionHandling()
+            ->json('POST', route('cart.store'))
             ->assertStatus(401);
     }
 
@@ -51,7 +52,8 @@ class CartStoreTest extends TestCase
         // endpoint must have an array of products
         $this->be($user = factory(User::class)->create());
 
-        $this->json('POST', route('cart.store'), [])
+        $this->withExceptionHandling()
+            ->json('POST', route('cart.store'), [])
             ->assertJsonValidationErrors(['products']);
     }
 
@@ -62,12 +64,14 @@ class CartStoreTest extends TestCase
         $variationId = factory(ProductVariation::class)->create()->id;
 
         // note that if the first id was invalid the error would be products.0.id
-        $this->json('POST', route('cart.store'), [
-            'products' => [
-                ['id' => $variationId, 'quantity' => 1],
-                ['id' => 1111111194444444499, 'quantity' => 1],
-            ]
-        ])->assertJsonValidationErrors(['products.1.id']);
+        $this->withExceptionHandling()
+            ->json('POST', route('cart.store'), [
+                'products' => [
+                    ['id' => $variationId, 'quantity' => 1],
+                    ['id' => 1111111194444444499, 'quantity' => 1],
+                ]
+            ])
+            ->assertJsonValidationErrors(['products.1.id']);
     }
 
     public function test_it_requires_each_item_to_have_a_quantity_greater_than_zero()
@@ -76,10 +80,12 @@ class CartStoreTest extends TestCase
 
         $variationId = factory(ProductVariation::class)->create()->id;
 
-        $this->json('POST', route('cart.store'), [
-            'products' => [
-                ['id' => $variationId, 'quantity' => 0],
-            ]
-        ])->assertJsonValidationErrors(['products.0.quantity']);
+        $this->withExceptionHandling()
+            ->json('POST', route('cart.store'), [
+                'products' => [
+                    ['id' => $variationId, 'quantity' => 0],
+                ]
+            ])
+            ->assertJsonValidationErrors(['products.0.quantity']);
     }
 }

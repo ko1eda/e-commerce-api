@@ -9,22 +9,24 @@ use App\Models\User;
 
 class RegistrationTest extends TestCase
 {
-
     public function test_it_requires_a_name()
     {
-        $this->json('POST', route('register'))
+        $this->withExceptionHandling()
+            ->json('POST', route('register'))
             ->assertJsonValidationErrors(['name']);
     }
 
     public function test_it_requires_an_email()
     {
-        $this->json('POST', route('register'))
+        $this->withExceptionHandling()
+            ->json('POST', route('register'))
             ->assertJsonValidationErrors(['email']);
     }
 
     public function test_it_requires_a_password()
     {
-        $this->json('POST', route('register'))
+        $this->withExceptionHandling()
+            ->json('POST', route('register'))
             ->assertJsonValidationErrors(['password']);
     }
 

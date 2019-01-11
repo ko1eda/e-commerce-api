@@ -49,7 +49,7 @@ class AuthTest extends TestCase
         ]);
 
         // if that user attempts to login weith their information
-        // then the correct data is returned 
+        // then the correct data is returned
         $this->json('POST', route('login'), [
             'email' => $user->email,
             'password' => $pass
@@ -70,7 +70,7 @@ class AuthTest extends TestCase
         // and they are not authenticated
         // then if they try and access the me route
         // they will recieve a 401 unauthorized
-        $this->json('GET', route('me'))
+        $this->withExceptionHandling()->json('GET', route('me'))
             ->assertStatus(401);
 
         // however if they do authenticate and provide a bearer token

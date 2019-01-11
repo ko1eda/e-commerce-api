@@ -12,7 +12,8 @@ class ProductsShowTest extends TestCase
 {
     public function test_it_returns_404_response_if_product_not_found()
     {
-        $this->json('get', route('products.show', ['slug' => 'kjdlkdlskdlskd']))
+        $this->withExceptionHandling()
+            ->json('get', route('products.show', ['slug' => 'kjdlkdlskdlskd']))
             ->assertStatus(404);
     }
 
