@@ -28,21 +28,53 @@ class Cart
 
 
     /**
-     * Restructure the passed in collection to a format that is
-     * compatable with sync method ex: [id1 => ['quantity' => 1], id2 => ['quantity' => 2], ...]
      * Then store this in the product_variation_user join table for the given user
      *
      * @param Collection $variatins
      * @return void
      */
-    public function add(Collection $variations)
+    public function add(Collection $variations) : void
     {
         $this->user->cart()->syncWithoutDetaching(
-            $variations->keyBy('id')->map(function ($variation) {
-                return ['quantity' => $variation['quantity']];
-            })
+            $this->reformatForSync($variations)
         );
     }
+
+
+    /**
+     * Reformat the a collection of product variations
+     * passed to match the formatting of
+     * the sync method [id1 => ['quantity' => 1], id2 => ['quantity' => 2], ...]
+     *
+     * @param Collection $variations
+     * @return Collection
+     */
+    protected function reformatForSync(Collection $variations) : Collection
+    {
+        return $variations
+            ->keyBy('id')
+            ->map(function ($variation) {
+                return ['quantity' => $variation['quantity'] + $this->getCurrentQuantity($variation['id'])];
+            });
+    }
+
+
+    /**
+     * If the variation already exists in this users cart
+     * Then return the quantity, otherwise return 0.
+     *
+     * @param int $id
+     * @return int
+     */
+    protected function getCurrentQuantity(int $id) : int
+    {
+        if ($variation = $this->user->cart->where('id', $id)->first()) {
+            return $variation->pivot->quantity;
+        }
+
+        return 0;
+    }
+
 
     // /**
     //  * total

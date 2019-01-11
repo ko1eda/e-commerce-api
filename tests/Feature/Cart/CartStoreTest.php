@@ -41,6 +41,32 @@ class CartStoreTest extends TestCase
     }
 
 
+    public function test_it_adds_to_the_quantity_if_a_variation_is_already_in_the_cart()
+    {
+        $this->be($user = factory(User::class)->create());
+
+        $v1 = factory(ProductVariation::class)->create()->id;
+
+        $this->json('POST', route('cart.store'), [
+            'products' => [
+                ['id' => $v1, 'quantity' => 1],
+            ]
+        ]);
+
+        $this->assertEquals(1, $user->refresh()->cart->first()->pivot->quantity);
+
+        // However if we add 10 more of the same product
+        $this->json('POST', route('cart.store'), [
+            'products' => [
+                ['id' => $v1, 'quantity' => 10],
+            ]
+        ]);
+
+        // now the quantity should be 11
+        $this->assertEquals(11, $user->refresh()->cart->first()->pivot->quantity);
+    }
+
+
     /**
      * -------------------------
      * Validation tests
