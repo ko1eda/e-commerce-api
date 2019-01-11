@@ -20,7 +20,11 @@ Route::apiResource('categories', 'CategoryController');
 Route::apiResource('products', 'ProductController');
 
 // Cart
-Route::apiResource('cart', 'CartController');
+// Note: since cart simply represents the pivot table between
+// product variations and users, we use the product variation id on any dynamic routes
+Route::apiResource('cart', 'CartController')->parameters([
+    'cart' => 'productVariation'
+]);
 
 // Auth
 // all files in directory namespace /Api/v1/Auth

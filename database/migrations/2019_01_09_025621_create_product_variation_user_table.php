@@ -18,10 +18,6 @@ class CreateProductVariationUserTable extends Migration
             $table->unsignedInteger('product_variation_id')->index();
             $table->unsignedInteger('quantity')->default(1);
             $table->timestamps();
-
-            // Add covering index
-            // https://stackoverflow.com/questions/50857254/speeding-up-joins-with-indexes
-            // $table->index(['user_id', 'product_variation_id', 'quantity']);
         });
     }
 

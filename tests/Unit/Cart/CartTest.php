@@ -12,44 +12,63 @@ use App\Models\User;
 class CartTest extends TestCase
 {
 
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->be($this->user = factory(User::class)->create());
+
+        $this->cart = new Cart($this->user);
+    }
+
+
     public function test_it_can_add_variations()
     {
-        $this->be($user = factory(User::class)->create());
-
-        $cart = new Cart($user);
-
         // cart should have an initial cont of 0
-        $this->assertEquals(0, $user->cart()->count());
+        $this->assertEquals(0, $this->user->cart()->count());
 
-        $vId = factory(ProductVariation::class)->create()->id;
+        $vid = factory(ProductVariation::class)->create()->id;
 
-        $cart->add(Collect([
-            ['id' => $vId, 'quantity' => 1 ]
+        $this->cart->add(Collect([
+            ['id' => $vid, 'quantity' => 1 ]
         ]));
 
         // then the cart should reflect this
-        $this->assertEquals(1, $user->fresh()->cart()->count());
+        $this->assertEquals(1, $this->user->fresh()->cart()->count());
     }
 
     public function test_it_can_add_to_the_quantity_of_an_existing_variation()
     {
-        $this->be($user = factory(User::class)->create());
+        $vid = factory(ProductVariation::class)->create()->id;
 
-        $cart = new Cart($user);
-
-        $vId = factory(ProductVariation::class)->create()->id;
-
-        $cart->add(Collect([
-            ['id' => $vId, 'quantity' => 1 ]
+        $this->cart->add(Collect([
+            ['id' => $vid, 'quantity' => 1 ]
         ]));
 
-        $this->assertEquals(1, $user->refresh()->cart->first()->pivot->quantity);
+        $this->assertEquals(1, $this->user->refresh()->cart->first()->pivot->quantity);
 
-        $cart->add(Collect([
-            ['id' => $vId, 'quantity' => 10 ]
-        ]));
+        $this->cart->add([
+            ['id' => $vid, 'quantity' => 10 ]
+        ]);
 
         // now the quantity should be 11
-        $this->assertEquals(11, $user->refresh()->cart->first()->pivot->quantity);
+        $this->assertEquals(11, $this->user->refresh()->cart->first()->pivot->quantity);
+    }
+
+
+    public function test_it_can_update_an_existing_variation()
+    {
+        $vid = factory(ProductVariation::class)->create()->id;
+
+        $this->cart->add(Collect([
+            ['id' => $vid, 'quantity' => 1 ]
+        ]));
+
+        $this->assertEquals(1, $this->user->refresh()->cart->first()->pivot->quantity);
+
+        $this->cart->update($vid, ['quantity' => 10]);
+
+        // now the quantity should be 11
+        $this->assertEquals(10, $this->user->refresh()->cart->first()->pivot->quantity);
     }
 }

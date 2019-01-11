@@ -4,6 +4,7 @@ namespace App\Cart;
 
 use App\Models\User;
 use Illuminate\Support\Collection;
+use App\Models\ProductVariation;
 
 class Cart
 {
@@ -28,25 +29,44 @@ class Cart
 
 
     /**
-     * Then store this in the product_variation_user join table for the given user
+     * Convert the parameter to a collection if it is not already
+     * Then reformat it and sync it to the product_variation_user_table
      *
-     * @param Collection $variatins
+     * @param Illuminate\Support\Collection | @param array  $variations
      * @return void
      */
-    public function add(Collection $variations) : void
+    public function add($variations) : void
     {
+        if (is_array($variations)) {
+            $variations = Collect($variations);
+        }
+
         $this->user->cart()->syncWithoutDetaching(
             $this->reformatForSync($variations)
         );
+    }
+
+    /**
+     * Update a given variation in the users cart
+     *
+     * @param int $id
+     * @param array $updateable
+     * @return void
+     */
+    public function update(int $id, array $updateable) : void
+    {
+        $this->user->cart()->updateExistingPivot($id, $updateable);
     }
 
 
     /**
      * Reformat the a collection of product variations
      * passed to match the formatting of
-     * the sync method [id1 => ['quantity' => 1], id2 => ['quantity' => 2], ...]
+     * the sync method
+     * from [['id' => 1, 'quantity' => 1], ...]
+     * to  [1 => ['quantity' => 1], 2 => ['quantity' => 2], ...]
      *
-     * @param Collection $variations
+     * @param Illuminate\Support\Collection $variations
      * @return Collection
      */
     protected function reformatForSync(Collection $variations) : Collection

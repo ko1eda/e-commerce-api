@@ -37,7 +37,7 @@ class CartController extends Controller
      * Then store it in the users cart
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param Cart $cart
+     * @param App\Cart\Cart $cart
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Cart $cart)
@@ -51,17 +51,17 @@ class CartController extends Controller
         $cart->add($variations);
     }
 
-
     /**
      * Update the specified item in the cart.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  App\Models\ProductVariation $variation
+     * @param  App\Cart\Cart $cart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ProductVariation $productVariation, Cart $cart)
     {
-        //
+        $cart->update($productVariation->id, $request->validate(['quantity' => 'required|gte:1']));
     }
 
     /**
