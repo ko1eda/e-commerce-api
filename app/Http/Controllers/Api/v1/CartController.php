@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\v1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ProductVariation;
-use Illuminate\Support\Collection;
 use App\Cart\Cart;
 use App\Http\Resources\CartResource;
 
@@ -33,9 +32,8 @@ class CartController extends Controller
     }
 
     /**
-     * Destructure the products from the validated request
-     * and convert it to a collection.
-     * Then store it in the users cart
+     * Pull the array of products from the validated request array
+     * Then store it in the users cart.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param App\Cart\Cart $cart
@@ -43,11 +41,11 @@ class CartController extends Controller
      */
     public function store(Request $request, Cart $cart)
     {
-        $variations = Collect($request->validate([
+        $variations = $request->validate([
             'products' => 'required|array',
             'products.*.id' => 'required|exists:products_variations,id',
             'products.*.quantity' => 'required|gte:1'
-        ])['products']);
+        ])['products'];
 
         $cart->add($variations);
     }
