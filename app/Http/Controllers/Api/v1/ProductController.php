@@ -19,7 +19,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         return ProductIndexResource::collection(
-            Product::withFilters($this->filters())->paginate(10)
+            Product::with('variations.stock')->withFilters($this->filters())->paginate(10)
         );
     }
 
