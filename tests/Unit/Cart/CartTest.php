@@ -55,7 +55,6 @@ class CartTest extends TestCase
         $this->assertEquals(11, $this->user->refresh()->cart->first()->pivot->quantity);
     }
 
-
     public function test_it_can_update_an_existing_variation()
     {
         $vid = factory(ProductVariation::class)->create()->id;
@@ -68,7 +67,21 @@ class CartTest extends TestCase
 
         $this->cart->update($vid, ['quantity' => 10]);
 
-        // now the quantity should be 11
         $this->assertEquals(10, $this->user->refresh()->cart->first()->pivot->quantity);
+    }
+
+    public function test_it_can_delete_a_variation()
+    {
+        $vid = factory(ProductVariation::class)->create()->id;
+
+        $this->cart->add(Collect([
+            ['id' => $vid, 'quantity' => 1 ]
+        ]));
+
+        $this->assertEquals(1, $this->user->refresh()->cart->count());
+
+        $this->cart->delete($vid);
+
+        $this->assertEquals(0, $this->user->refresh()->cart->count());
     }
 }

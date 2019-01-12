@@ -65,13 +65,14 @@ class CartController extends Controller
     }
 
     /**
-     * Remove all items from the cart.
+     * Remove an item from the cart.
      *
      * @param  int  $id
+     * @param  App\Cart\Cart $cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ProductVariation $productVariation, Cart $cart)
     {
-        //
+        $cart->delete($productVariation->id);
     }
 }

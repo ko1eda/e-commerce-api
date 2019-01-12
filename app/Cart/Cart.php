@@ -15,7 +15,6 @@ class Cart
      */
     protected $user;
 
-
     /**
      * __construct
      *
@@ -26,7 +25,6 @@ class Cart
     {
         $this->user = $user;
     }
-
 
     /**
      * Convert the parameter to a collection if it is not already
@@ -58,6 +56,18 @@ class Cart
         $this->user->cart()->updateExistingPivot($id, $updateable);
     }
 
+    /**
+     * Remove a variation from the cart
+     *
+     * @param int $id
+     * @return void
+     */
+    public function delete(int $id) : void
+    {
+        $this->user->cart()->detach($id);
+    }
+
+
 
     /**
      * Reformat the a collection of product variations
@@ -77,7 +87,6 @@ class Cart
                 return ['quantity' => $variation['quantity'] + $this->getCurrentQuantity($variation['id'])];
             });
     }
-
 
     /**
      * If the variation already exists in this users cart

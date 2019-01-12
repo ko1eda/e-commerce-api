@@ -10,7 +10,7 @@ use App\Models\ProductVariation;
 
 class CartUpdateTest extends TestCase
 {
-    public function test_it_does_not_allow_unauthenticated_users_to_udpate_items()
+    public function test_it_does_not_allow_unauthenticated_users_to_update_items()
     {
         // 401 unauthorized
         $this->withExceptionHandling()
