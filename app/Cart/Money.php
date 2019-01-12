@@ -25,21 +25,23 @@ class Money
      * Creates a new money object
      * set to the users default currency
      * which is checked via middleware
+     *
+     * @param int $value
+     * @return void
      */
-    public function __construct($value)
+    public function __construct(int $value)
     {
         $this->money = BaseMoney::{config('app.currency')}($value);
     }
 
     /**
-     * Expose the Money\Money base class
-     * so that we can preform operations
+     * Expose the value of the  Money\Money object
      *
-     * @return BaseMoney
+     * @return int
      */
-    public function amount()
+    public function amount() : int
     {
-        return $this->money;
+        return $this->money->getAmount();
     }
 
     /**

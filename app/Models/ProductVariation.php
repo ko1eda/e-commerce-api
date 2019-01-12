@@ -69,16 +69,11 @@ class ProductVariation extends Model
      * depending on if the variations
      * shares the same price as its parent
      *
-     * @throws \Exception
      * @return bool
      */
     public function getHasParentPriceAttribute() : bool
     {
-        if (!$this->price->amount()->isSameCurrency($this->product->price->amount())) {
-            throw new \Exception('Currency Mismatch Exception');
-        }
-
-        return $this->price->amount()->equals($this->product->price->amount());
+        return $this->price->amount() === $this->product->price->amount();
     }
 
 
