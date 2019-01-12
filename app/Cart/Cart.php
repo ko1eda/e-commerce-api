@@ -67,6 +67,16 @@ class Cart
         $this->user->cart()->detach($id);
     }
 
+    /**
+     * Remove a variation from the cart
+     *
+     * @param int $id
+     * @return void
+     */
+    public function empty() : void
+    {
+        $this->user->cart()->sync([]);
+    }
 
 
     /**

@@ -75,4 +75,15 @@ class CartController extends Controller
     {
         $cart->delete($productVariation->id);
     }
+
+    /**
+     * Remove all the items from the cart.
+     *
+     * @param  App\Cart\Cart $cart
+     * @return \Illuminate\Http\Response
+     */
+    public function empty(Cart $cart)
+    {
+        $cart->empty();
+    }
 }

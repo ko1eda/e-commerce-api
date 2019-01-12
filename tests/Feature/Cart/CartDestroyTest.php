@@ -44,7 +44,7 @@ class CartDestroyTest extends TestCase
         $this->json('DELETE', route('cart.update', $vid));
 
         $this->assertEquals(0, $user->refresh()->cart->count());
-        
+
         $this->assertDatabaseMissing('product_variation_user', ['product_variation_id' => $vid]);
     }
 }
