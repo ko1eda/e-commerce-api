@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ProductVariation;
 use Illuminate\Support\Collection;
 use App\Cart\Cart;
+use App\Http\Resources\CartResource;
 
 class CartController extends Controller
 {
@@ -26,9 +27,9 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return new CartResource($request->user());
     }
 
     /**
